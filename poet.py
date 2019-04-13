@@ -146,4 +146,5 @@ history = model.fit(
     steps_per_epoch=int(steps_per_epoch),
     callbacks=[checkpoint_callback],
 )
-
+ with open('/trainHistoryDict', 'wb') as file_pi:
+        pickle.dump(history.history, file_pi)
