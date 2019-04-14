@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 import tensorflow as tf
 import numpy as np
-import os
+import os, pickle
 import time
 from os import listdir
 from os.path import isfile, join
@@ -146,5 +146,10 @@ history = model.fit(
     steps_per_epoch=int(steps_per_epoch),
     callbacks=[checkpoint_callback],
 )
- with open('/trainHistoryDict', 'wb') as file_pi:
-        pickle.dump(history.history, file_pi)
+
+
+history_filepath = os.path.join(checkpoint_dir, "trainHistoryDict")
+model_filepath = os.path.join(checkpoint_dir, "trainedmodel_50Epoch.h5")
+model.save(model_filepath)  # saving the model
+with open(history_filepath, "wb") as handle:  # saving the history of the model
+    pickle.dump(history.history, handle)
